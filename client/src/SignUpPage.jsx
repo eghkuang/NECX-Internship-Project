@@ -2,6 +2,14 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import axios from "axios";
+import {
+  Box,
+  Button,
+  ThemeProvider,
+  Container,
+  Typography,
+  TextField,
+} from "@mui/material";
 
 const SignUpPage = () => {
   const { register, handleSubmit } = useForm();
@@ -36,22 +44,82 @@ const SignUpPage = () => {
       });
   };
 
+  const returnToSignin = () => {
+    return navigate("/signin");
+  };
+
   const required = { required: true };
+
   return (
-    <div>
+    <Container
+      sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}
+    >
+      <Typography variant="h2" sx={{ mt: 8, color: "secondary.main" }}>
+        Sign Up
+      </Typography>
       <form
         onSubmit={handleSubmit((data) => {
           setData(JSON.stringify(data));
           handleSignUp(data);
         })}
       >
-        <input {...register("firstName", required)} placeholder="First Name" />
-        <input {...register("lastName", required)} placeholder="Last Name" />
-        <input {...register("email", required)} placeholder="Email" />
-        <input {...register("password", required)} placeholder="Password" />
-        <input type="submit" />
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+          }}
+        >
+          <TextField
+            fullWidth
+            variant="outlined"
+            {...register("firstName")}
+            placeholder="First Name"
+            sx={{ mt: 3, p: 1 }}
+          />
+          <TextField
+            fullWidth
+            variant="outlined"
+            {...register("lastName")}
+            placeholder="Last Name"
+            sx={{ mt: 0.5, p: 1 }}
+          />
+          <TextField
+            fullWidth
+            required
+            variant="outlined"
+            {...register("email")}
+            placeholder="Email"
+            sx={{ mt: 0.5, p: 1 }}
+          />
+          <TextField
+            fullWidth
+            required
+            variant="outlined"
+            {...register("password")}
+            type="password"
+            sx={{ mt: 0.5, p: 1 }}
+            inputProps={{ minLength: 6 }}
+            placeholder="Password"
+            helperText="Password must be 6 characters minimum"
+          />
+        </Box>
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "row",
+            alignItems: "center",
+          }}
+        >
+          <Button sx={{ p: 1, m: 2 }} variant="contained" type="submit">
+            Submit
+          </Button>
+          <Button sx={{ p: 1, m: 1 }} type="signin" onClick={returnToSignin}>
+            Back to Sign In
+          </Button>
+        </Box>
       </form>
-    </div>
+    </Container>
   );
 };
 
