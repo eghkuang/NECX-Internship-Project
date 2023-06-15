@@ -1,6 +1,6 @@
 const express = require("express");
 const path = require("path");
-const { loginUser, newUser } = require("../database/controllers/users.js");
+const { loginUser, newUser } = require("./controller.js");
 
 const app = express();
 const port = 3001;
@@ -16,6 +16,8 @@ const redirect = (req, res) => {
 app.get("/", redirect);
 app.use("/signin", staticMiddleware);
 app.use("/signup", staticMiddleware);
+
+//Landing page is only accessible through signin flow.
 app.get("/landingPage", redirect);
 
 app.post("/login", loginUser);

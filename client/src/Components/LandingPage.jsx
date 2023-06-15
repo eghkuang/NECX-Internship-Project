@@ -1,6 +1,6 @@
-import React from "react";
-import YouTube from "react-youtube";
+import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import YouTube from "react-youtube";
 import { useForm } from "react-hook-form";
 import {
   Box,
@@ -10,7 +10,7 @@ import {
   Typography,
 } from "@mui/material";
 
-const LandingPage = () => {
+const LandingPage = (props) => {
   const navigate = useNavigate();
   const videoId = "no7AlKYYfn0";
   const opts = {
@@ -21,9 +21,13 @@ const LandingPage = () => {
     // },
   };
 
-  const returnToSignin = () => {
-    return navigate("/signin");
+  const logout = () => {
+    props.setSignedIn(false);
   };
+
+  useEffect(() => {
+    if (!props.signedIn) navigate("/signin");
+  }, []);
 
   return (
     <Container>
@@ -34,7 +38,7 @@ const LandingPage = () => {
           variant="outlined"
           sx={{ p: 1, m: 1 }}
           type="signin"
-          onClick={returnToSignin}
+          onClick={logout}
         >
           LOGOUT
         </Button>

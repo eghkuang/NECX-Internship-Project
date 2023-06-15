@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Container, createTheme, ThemeProvider } from "@mui/material";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import AuthenticationPage from "./AuthenticationPage.jsx";
-import LandingPage from "./LandingPage.jsx";
-import SignUpPage from "./SignUpPage.jsx";
+import { BrowserRouter as Router, Route, useNavigate } from "react-router-dom";
+import AuthenticationPage from "./Components/AuthenticationPage.jsx";
+import LandingPage from "./Components/LandingPage.jsx";
+import SignUpPage from "./Components/SignUpPage.jsx";
+import Pages from "./Pages.jsx";
 
 const theme = createTheme({
   palette: {
@@ -12,6 +13,9 @@ const theme = createTheme({
     },
     secondary: {
       main: "#2e74c9",
+    },
+    background: {
+      main: "#edf2f4",
     },
   },
   typography: {
@@ -26,20 +30,13 @@ const theme = createTheme({
   },
 });
 
-const App = () => {
-  return (
-    <ThemeProvider theme={theme}>
-      <Container>
-        <Router>
-          <Routes>
-            <Route path="/signin" element={<AuthenticationPage />} />
-            <Route path="/signup" element={<SignUpPage />} />
-            <Route path="/landingPage" element={<LandingPage />} />
-          </Routes>
-        </Router>
-      </Container>
-    </ThemeProvider>
-  );
-};
-
+const App = () => (
+  <ThemeProvider theme={theme}>
+    <Container>
+      <Router>
+        <Pages />
+      </Router>
+    </Container>
+  </ThemeProvider>
+);
 export default App;

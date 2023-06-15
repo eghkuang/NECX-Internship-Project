@@ -1,10 +1,18 @@
-const { Accounts } = require("../index.js");
+const Mongoose = require("../db/index.js");
+
+const AccountsSchema = new Mongoose.Schema({
+  firstName: { type: String, required: true },
+  lastName: { type: String, required: true },
+  email: { type: String, required: true, unique: true },
+  password: { type: String, required: true },
+});
+
+const Accounts = Mongoose.model("Accounts", AccountsSchema);
 
 const findAccountByEmail = (email, callback) => {
   Accounts.collection
     .findOne({ email })
     .then((result) => {
-      console.log("result", result);
       callback(result);
     })
     .catch((err) => {
@@ -13,12 +21,9 @@ const findAccountByEmail = (email, callback) => {
 };
 
 const createAccount = (req, callback) => {
-  console.log("what is insertOneUser req", req);
-  console.log("what is accounts: ", Accounts);
   Accounts.collection
     .insertOne(req)
     .then((result) => {
-      console.log("result", result);
       callback(result);
     })
     .catch((err) => {

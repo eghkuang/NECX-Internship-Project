@@ -12,7 +12,7 @@ import {
   TextField,
 } from "@mui/material";
 
-const AuthenticationPage = () => {
+const AuthenticationPage = (props) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
@@ -25,10 +25,9 @@ const AuthenticationPage = () => {
       .post("/login", { email, password })
       .then(({ data }) => {
         setSubmitted(false);
-        console.log("response data: ", data);
         switch (data) {
           case "Login Successful":
-            navigate("/LandingPage");
+            props.setSignedIn(true);
             return;
           case "Email Not Found":
             alert("Email not found. Please try again or sign up.");
@@ -89,8 +88,8 @@ const AuthenticationPage = () => {
         <TextField
           fullWidth
           type="password"
-          id="password"
-          name="password"
+          id="current-password"
+          name="current-password"
           required
           placeholder="Password:"
           onChange={handlePasswordChange}
@@ -104,7 +103,6 @@ const AuthenticationPage = () => {
             mt: 2,
             display: "flex",
             justifyContent: "center",
-            width: "100%",
           }}
         >
           <Button sx={{ p: 1, m: 1 }} variant="contained" type="submit">

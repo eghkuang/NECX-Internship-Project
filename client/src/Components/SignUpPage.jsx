@@ -17,11 +17,9 @@ const SignUpPage = () => {
   const navigate = useNavigate();
 
   const handleSignUp = (userData) => {
-    console.log("d: ", userData);
     axios
       .post("/signup", userData)
       .then(({ data }) => {
-        console.log("response data : ", data);
         switch (data) {
           case "Account created":
             navigate("/landingPage");
@@ -37,7 +35,6 @@ const SignUpPage = () => {
         }
       })
       .catch((err) => {
-        console.log("submit err: ", err);
         throw Error(
           "This email is already in use. Please try and login again."
         );
@@ -45,7 +42,7 @@ const SignUpPage = () => {
   };
 
   const returnToSignin = () => {
-    return navigate("/signin");
+    navigate("/signin");
   };
 
   const required = { required: true };
