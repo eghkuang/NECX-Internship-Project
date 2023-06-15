@@ -1,17 +1,27 @@
-const express = require('express');
-const path = require('path');
+const express = require("express");
+const path = require("path");
+const { loginUser, newUser } = require("../database/controllers/users.js");
 
 const app = express();
 const port = 3001;
 
-const staticMiddleware = express.static(path.join(__dirname, '../client/dist'));
+const staticMiddleware = express.static(path.join(__dirname, "../client/dist"));
 
 app.use(express.json());
 
-app.use('/', staticMiddleware);
-// app.use('/database', databese);
+const redirect = (req, res) => {
+  res.redirect("/signin");
+};
 
-app.get('/help', (req, res) => {
+app.get("/", redirect);
+app.use("/signin", staticMiddleware);
+app.use("/signup", staticMiddleware);
+app.get("/landingPage", redirect);
+
+app.post("/login", loginUser);
+app.post("/signup", newUser);
+
+app.get("/help", (req, res) => {
   res.send(`Your server is running at http://localhost:${port}`);
 });
 
